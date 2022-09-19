@@ -1,0 +1,17 @@
+{% if devkit.recent_posts %}
+
+	<div class="devkit-recent-posts">
+
+		<div class="devkit-post-grid">
+
+			{% for post in devkit.recent_posts %}
+
+				{{ include( 'post-grid-item.twig' ) }}
+
+			{% endfor %}
+
+		</div>
+
+	</div>
+
+{% endif %}

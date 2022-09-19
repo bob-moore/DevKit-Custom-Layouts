@@ -1,0 +1,31 @@
+{
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"phpcs.standard": "PSR4",
+	"autoload": {
+		"psr-4": {
+			"DevKit\\Layouts\\" : "includes",
+			"DevKit\\Layouts\\Compatibility\\" : "Compatibility",
+			"DevKit\\Layouts\\Partials\\" : "Partials"
+		}
+	},
+	"classmap": [
+		"devkit-layout-engine.php"
+	],
+	"require": {
+		"timber/timber": "^1.19",
+		"wpcl/wpconsole": "^1.0",
+		"twig/cache-extra": "^3.4",
+		"scssphp/scssphp": "^1.10",
+		"padaliyajay/php-autoprefixer": "^1.4"
+	},
+	"scripts": {
+		"post-install-cmd": "npm install",
+		"post-update-cmd": "npm install"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
+	}
+}

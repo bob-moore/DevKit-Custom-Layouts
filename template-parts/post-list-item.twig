@@ -1,0 +1,27 @@
+<li class="devkit-post">
+
+	<a href="{{post.link}}" class="devkit-post-link" rel="bookmark">
+
+		{% if post.thumbnail.src %}
+
+			<div class="devkit-thumbnail-container">
+
+				<img
+					src="{{ post.thumbnail.src( 'thumbnail' ) }}"
+					class="devkit-post-thumbnail"
+					alt="Image for {{ post.title }}"
+				/>
+
+			</div>
+
+		{% endif %}
+
+		<div class="devkit-title-container">
+
+			<span class="devkit-entry-title">{{ post.title }}</span>
+
+		</div>
+
+	</a>
+
+</li>

@@ -1,0 +1,23 @@
+{% if contextual_related_posts %}
+	<div class="cl-contextual-related-posts post-grid">
+		{% for post in contextual_related_posts %}
+			<div class="cl-related-post">
+				<a href="{{post.link}}" class="cl-related-post-link" rel="bookmark">
+					{% if post.thumbnail.src %}
+						<span style="background-image: url('{{ post.thumbnail.src( 'post-thumbnail' ) }}');" class="cl-related-post-thumbnail-container">
+							<span class="cl-screen-reader-text">{{ post.title }}</span>
+						</span>
+					{% endif %}
+					<h2 class="cl-related-entry-title">{{ post.title }}</h2>
+
+					<div class="cl-related-post-excerpt">
+						{{post.preview.read_more(false).length(20)}}
+					</div>
+				</a>
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+{% endif %}

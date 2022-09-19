@@ -1,0 +1,49 @@
+{% if post.author.description %}
+
+	<aside id="devkit-author" class="devkit-author-box">
+
+		<div class="container">
+
+			{% block author_image %}
+
+				<div class="author-image">
+
+					<img src="{{ post.author.avatar({ size: 125 }) }}" alt="{{post.author.name}}" width="125px" height="125px" />
+
+				</div>
+
+			{% endblock author_image %}
+
+			{% block author_info %}
+
+				<div class="author-info">
+
+					{% block author_header %}
+
+					<header class="author-header">
+
+						<span class="author_name"><a href="{{post.author.link}}" class="author-archive-link">{{post.author.name}}</a></span>
+
+					</header>
+
+					{% endblock author_header%}
+
+					{% block author_body %}
+
+					<div class="author-body">
+
+						{{ post.author.description|shortcodes|wpautop }}
+
+					</div>
+
+					{% endblock author_body %}
+
+				</div>
+
+			{% endblock author_info %}
+
+		</div>
+
+	</aside>
+
+{% endif %}

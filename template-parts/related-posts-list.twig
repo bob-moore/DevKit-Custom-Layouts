@@ -1,0 +1,17 @@
+{% if devkit.related %}
+
+	<div class="devkit-related-posts">
+
+		<ul class="devkit-post-list">
+
+			{% for post in devkit.related %}
+
+				{{ include( 'post-list-item.twig' ) }}
+
+			{% endfor %}
+
+		</ul>
+
+	</div>
+
+{% endif %}

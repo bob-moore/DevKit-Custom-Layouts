@@ -1,0 +1,17 @@
+{% if devkit.related %}
+
+	<div class="devkit-related-posts">
+
+		<div class="devkit-post-grid">
+
+			{% for post in devkit.related %}
+
+				{{ include( 'post-grid-item.twig' ) }}
+
+			{% endfor %}
+
+		</div>
+
+	</div>
+
+{% endif %}

@@ -1,0 +1,67 @@
+{% if devkit.adjacent %}
+
+	<div class="devkit-post-navigation">
+
+	{% if devkit.adjacent.prev %}
+
+		<a class="post-navigation-link link-prev" href="{{devkit.adjacent.prev.link}}">
+
+			{% if devkit.adjacent.prev.icon %}
+
+				<div class="link-icon">
+
+					<span class="{{devkit.adjacent.prev.icon}}"></span>
+
+				</div>
+
+			{% endif %}
+
+			<div class="link-content">
+
+				{% if devkit.adjacent.prev.prefix %}
+
+					<span class="label">{{devkit.adjacent.prev.prefix}}</span>
+
+				{% endif %}
+
+				<span class="title">{{devkit.adjacent.prev.title}}</span>
+
+			</div>
+
+		</a>
+
+	{% endif %}
+
+	{% if devkit.adjacent.next %}
+
+		<a class="post-navigation-link link-next" href="{{devkit.adjacent.next.link}}">
+
+			<div class="link-content">
+
+				{% if devkit.adjacent.next.prefix %}
+
+					<span class="label">{{devkit.adjacent.next.prefix}}</span>
+
+				{% endif %}
+
+				<span class="title">{{devkit.adjacent.next.title}}</span>
+
+			</div>
+
+			{% if devkit.adjacent.next.icon %}
+
+				<div class="link-icon">
+
+					<span class="{{devkit.adjacent.next.icon}}"></span>
+
+				</div>
+
+			{% endif %}
+
+		</a>
+
+	{% endif %}
+
+	</div>
+
+{% endif %}

@@ -1,0 +1,25 @@
+<div class="devkit-post">
+
+	<a href="{{post.link}}" class="devkit-post-link" rel="bookmark">
+
+		{% if post.thumbnail.src %}
+
+			<span style="background-image: url('{{ post.thumbnail.src( 'post-thumbnail' ) }}');" class="devkit-post-thumbnail-container">
+
+				<span class="screen-reader-text">{{ post.title }}</span>
+
+			</span>
+
+		{% endif %}
+
+		<span class="devkit-entry-title">{{ post.title }}</span>
+
+		<div class="devkit-post-excerpt">
+
+			{{post.preview.read_more(false).length(10)}}
+
+		</div>
+
+	</a>
+
+</div>

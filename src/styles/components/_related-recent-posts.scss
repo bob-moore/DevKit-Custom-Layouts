@@ -1,0 +1,80 @@
+.devkit-post-grid
+{
+	@include media( 'min-width: tablet-small' )
+	{
+		--devkit-grid-columns : 2;
+	}
+	@include media('min-width: tablet')
+	{
+		--devkit-grid-columns : 3;
+	}
+	display: grid;
+	grid-template-columns: repeat( var( --devkit-grid-columns ), minmax( 0, 1fr ) );
+	grid-template-rows: minmax( min-content, max-content );
+	gap : var( --devkit-box-gap );
+	.devkit-post
+	{
+		background-color: var( --devkit-box-background, #fff );
+		.devkit-entry-title
+		{
+			font-size: 1.25rem;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		.devkit-post-link
+		{
+			display: flex;
+			flex-direction: column;
+			gap: var( --devkit-box-gap );
+		}
+	}
+	.devkit-post-thumbnail-container
+	{
+		height: 0;
+		padding-bottom: 62.5%;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+}
+.devkit-post-list
+{
+	list-style-type: none !important;
+	list-style-position: inside !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	display: flex;
+	flex-direction: column;
+	gap: var( --devkit-box-gap );
+	li
+	{
+		list-style-type: none !important;
+		list-style-position: inside !important;
+	}
+	.devkit-entry-title
+	{
+		font-size: 1rem;
+		margin: 0 !important;
+		padding: 0 !important;
+		line-height: 1;
+	}
+	.devkit-post-link
+	{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: var( --devkit-box-gap );
+		align-items: center;
+	}
+	.devkit-title-container
+	{
+		flex: 1;
+		gap: var( --devkit-box-padding );
+		padding-left: 0;
+	}
+	.devkit-thumbnail-container
+	{
+		width: 25%;
+		max-width: 80px;
+	}
+}
