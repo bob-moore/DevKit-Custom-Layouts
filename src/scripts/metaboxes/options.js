@@ -15,7 +15,6 @@ import "ace-builds/src-noconflict/snippets/javascript";
 import "ace-builds/src-noconflict/ext-emmet";
 import 'emmet-core';
 
-
 import OptionSearch from '../includes/optionsearch.js';
 import fieldKey from '../includes/field-key';
 
@@ -46,7 +45,7 @@ class OptionsMetabox extends React.Component
     _updateSnippet = ( value ) => {
         this.setState({ snippet : value });
     }
-    _updateContaner = ( select ) => {
+    _updateContainer = ( select ) => {
         this.setState( { container : select.value } );
     }
     _updatePartial = ( select ) => {
@@ -155,7 +154,7 @@ class OptionsMetabox extends React.Component
                             value={OptionSearch(this.fields.container.options, this.state.container, false)}
                             isSearchable={false}
                             isClearable={true}
-                            onChange={this._updateContaner}
+                            onChange={this._updateContainer}
                         />
                     </div>
                     <div className={'field' + ( this.state.container === '' ? ' screen-reader-text' : '' ) }>

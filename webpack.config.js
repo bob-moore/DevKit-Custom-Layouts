@@ -45,6 +45,6 @@ module.exports = (env, argv) => {
                 }
             ]
         },
-        plugins: [ new DependencyExtractionWebpackPlugin() ],
+        plugins: [ new DependencyExtractionWebpackPlugin({injectPolyfill : true}) ],
     }
 };

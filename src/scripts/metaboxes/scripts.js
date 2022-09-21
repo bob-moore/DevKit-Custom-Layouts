@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Select from 'react-select'
+
 import ReactDOM from 'react-dom/client';
 import domReady from '@wordpress/dom-ready';
+import { __, sprintf } from '@wordpress/i18n';
 
 import AceEditor from "react-ace";
 
@@ -18,8 +18,6 @@ import 'emmet-core';
 
 
 import fieldKey from '../includes/field-key';
-
-const { __, _x, _n, _nx } = wp.i18n;
 
 class OptionsMetabox extends React.Component
 {

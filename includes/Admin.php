@@ -239,8 +239,6 @@ class Admin extends Base
 
 	public function renderMetabox( \WP_Post $post, array $args ) : void
 	{
-        wp_nonce_field('somerandomstr', '_mishanonce');
-
 		$id = str_replace('devkit_layouts_', '', $args['id'] );
 
 		if ( is_file( DEVKIT_TEMPLATES_PATH . 'template-parts/admin/metaboxes/' . $id . '.twig' ) )

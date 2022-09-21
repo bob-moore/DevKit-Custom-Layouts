@@ -4,10 +4,10 @@ import domReady from '@wordpress/dom-ready';
 import OptionSearch from '../includes/optionsearch.js';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { sprintf, __, _x, _n, _nx } from '@wordpress/i18n';
-import { Fragment } from "@wordpress/element";
+import { Fragment, Component, createElement, render } from "@wordpress/element";
 
 // noinspection JSUnresolvedVariable
-class LocationsMetabox extends wp.element.Component
+class LocationsMetabox extends Component
 {
     constructor(props)
     {
@@ -61,7 +61,9 @@ class LocationsMetabox extends wp.element.Component
             <Fragment>
                 <div className="field-group">
                     <div className="field group-controls">
-                        <a href="#" className="add group-control" onClick={this.addField}>{__( 'Add Location', 'devkit_layouts' )}</a>
+                        <a href="#" className="add group-control" onClick={this.addField}>
+                            {__( 'Add Location', 'devkit_layouts' )}
+                        </a>
                     </div>
                 </div>
                 { ! this.state.locations.length &&
@@ -119,7 +121,7 @@ class LocationsMetabox extends wp.element.Component
                             text={sprintf( '[devkit_layout id="%s"]', 123 )}
                             onCopy = {(event) => {console.log(event)}}
                         >
-                            <span className={'copy-to-clipboard'}>Copy to clipboard</span>
+                            <span className={'copy-to-clipboard'}><a className={"copy"} href={"#"}>Copy to clipboard</a></span>
                         </CopyToClipboard>
                         </p>
                     </div>
@@ -133,8 +135,8 @@ domReady( function ()
 	let metabox_container = document.getElementById('devkit-layouts-metabox-locations');
 	if ( metabox_container )
 	{
-        wp.element.render(
-            wp.element.createElement( LocationsMetabox ) ,
+        render(
+            createElement( LocationsMetabox ) ,
             metabox_container
         );
 	}

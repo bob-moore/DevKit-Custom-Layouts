@@ -98,8 +98,11 @@ body.devkit-editor-hidden {
         cursor: pointer;
         color: var( --devkit-color-link );
         font-size: .85em;
-        &:active {
-            transform: translate3d( 1px, 0, 0 );
+        a {
+            position: relative;
+        }
+        a:active {
+            top: -1px;
         }
     }
     fieldset,
