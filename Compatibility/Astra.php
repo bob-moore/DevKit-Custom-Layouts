@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Support for the astra theme
  *
@@ -17,22 +16,20 @@ defined('ABSPATH') || exit;
 class Astra extends Base
 {
 	/**
-	 * Constructer
+	 * Constructor
 	 *
 	 * Check if Astra is activated and construct new instance
 	 *
-	 * @return bool/obj False when not activated, $this otherwise
+	 * @return $this
 	 */
 	public function __construct()
 	{
+		 $theme = wp_get_theme();
 
-		// $theme = wp_get_theme();
-
-		// if (!is_object($theme) || !isset($theme->template) || $theme->template !== 'astra') {
-		// 	return false;
-		// }
-
-		return parent::__construct();
+		 if ( is_object( $theme ) && strtolower( $theme->__get( 'template' ) ) === 'astra') {
+			 parent::__construct();
+		 }
+		 return $this;
 	}
 	/**
 	 * Register filters
@@ -49,7 +46,7 @@ class Astra extends Base
 	/**
 	 * Get all the action hooks for this specific theme
 	 *
-	 * @param  array $hooks Action hooks that the theme can display - default is empty
+	 * @param  array $locations Action hooks that the theme can display - default is empty
 	 * @return array $hooks
 	 */
 	public function locations( array $locations ) : array
@@ -135,7 +132,7 @@ class Astra extends Base
 				'astra_footer_after' => 'astra_footer_after',
 				'astra_body_bottom' => 'Astra Body Bottom',
 			],
-			'not found' => [
+			'special' => [
 				'astra_404_content_template' => 'astra_404_content_template',
 			],
 		];

@@ -12,7 +12,7 @@ gulp.task( 'build-css-production', function(){
 		.pipe( sass().on( 'error', sass.logError ) )
 		.pipe( postcss( [ autoprefixer( { grid : 'autoplace' } ), pxtorem() ] ) )
 		.pipe( postcss( [ cssnano() ] ) )
-		.pipe( rename( { suffix: '.min' } ) )
+		// .pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( './dist/styles' ) );
 
 

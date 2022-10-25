@@ -24,7 +24,7 @@ class PostNavigation extends Base {
 	 */
 	public function addFilters(): void
 	{
-		Subscriber::addFilter( 'devkit/layouts/template_parts', [$this, 'addTemplates'] );
+//		Subscriber::addFilter( 'devkit/layouts/template_parts', [$this, 'addTemplates'] );
 		Subscriber::addFilter( 'timber/context', [ $this, 'context' ], 14 );
 	}
 	/**
@@ -38,7 +38,10 @@ class PostNavigation extends Base {
 		return array_merge(
 			$templates,
 			[
-				'post-navigation' => 'Post Navigation',
+				[
+					'label' => __('Post Navigation', 'devkit_layouts'),
+					'value' => 'post-navigation'
+				]
 			]
 		);
 	}

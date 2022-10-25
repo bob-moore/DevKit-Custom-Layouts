@@ -23,9 +23,9 @@ class Utilities extends Base
 	 *
 	 * @return void
 	 */
-	public function addFilters() {
+	public function addFilters() : void
+	{
 		Subscriber::addFilter( 'devkit/layouts/template_scope', [$this, 'setThis'] );
-		// Subscriber::addFilter( 'template_include', [$this, 'filterTemplate'] );
 	}
 
 	public function setThis( $_scope )
@@ -33,36 +33,84 @@ class Utilities extends Base
 		$_scope['functions'] = $this;
 		return $_scope;
 	}
-	public function compileCss( string $scss = '', $node = '' ) : string
+	public static function compileCss( string $scss = '') : string
 	{
 		if ( empty( $scss ) ) {
 			return '';
 		}
 
-		$css = '';
-
-		if ( ! empty( $node ) )
-		{
-			$scss = str_ireplace( '$SELECTOR', '#custom-layout-' . $node, $scss );
-
-			$scss = apply_filters( "devkit/layouts/scss/{$node}", $scss );
-		}
-
-		$scss = apply_filters( 'devkit/layouts/scss', $scss );
-
 		try
 		{
 			$compiler = new Compiler();
-			$css = $compiler->compile( $scss );
-			$autoprefixer = new Autoprefixer( $css );
+			$css = $compiler->compileString(apply_filters( 'devkit/layouts/scss', $scss ))->getCss();
+			$autoprefixer = new Autoprefixer($css);
 			$css = $autoprefixer->compile();
 		}
 		catch ( \Exception $e )
 		{
-			return '';
+//			return '';
 		}
+		finally
+		{
+			return $css ?? '';
+		}
+	}
+	/**
+	 * Format field data into usable json values
+	 *
+	 * @param array $data
+	 * @return array
+	 */
+	public static function formatJsonSelect( array $data ) : array
+	{
+		foreach ( $data as $index => $field )
+		{
+			/**
+			 * If not a select field, we can bail
+			 */
+			if ( ! isset( $field['type'] ) || $field['type'] !== 'select' )
+			{
+				continue;
+			}
+			/**
+			 * Format each option
+			 */
+			$options = [];
 
-		return $css;
+			foreach ( $field['options'] as $optval => $optlabel ) {
+				/**
+				 * If an optgroup, we need to drill down further
+				 */
+				if ( is_array( $optlabel ) )
+				{
+					$optgroup = [];
+
+					foreach ( $optlabel as $optgroup_value => $optgroup_value )
+					{
+						$option = [
+							'value' => $optgroup_value,
+							'label' => $optgroup_value
+						];
+						$optgroup[] = $option;
+					}
+
+					$options[] = [
+						'label' => $optval,
+						'options' => $optgroup
+					];
+				}
+				else
+				{
+					$option = [
+						'value' => $optval,
+						'label' => $optlabel
+					];
+					$options[] = $option;
+				}
+			}
+			$data[$index]['options'] = $options;
+		}
+		return $data;
 	}
 	/**
 	 * Global callback to run wp functions
@@ -80,7 +128,5 @@ class Utilities extends Base
 
 		}
 	}
-	// public function filterTemplate($template) {
-	// 	return $template;
-	// }
+
 }

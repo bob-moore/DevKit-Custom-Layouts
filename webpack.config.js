@@ -1,34 +1,20 @@
 const path = require('path');
-const glob = require("glob");
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
-/**
- * Helper function to glob all .js files in src directory
- */
-const webpack_entries = glob.sync( 'src/scripts/*.js' ).reduce( ( files, file ) => {
-
-    let filename =  path.basename( file );
-
-    let name = path.parse( filename ).name;
-
-    files[name] = './src/scripts/' + filename;
-
-    return files;
-
-}, {} );
 
 module.exports = (env, argv) => {
     return {
-        entry: webpack_entries,
+        entry: {
+            frontend: { import: './src/scripts/frontend.js', filename: './dist/scripts/frontend.js' },
+            admin: { import: './src/scripts/admin.js', filename: './dist/scripts/admin.js' },
+            block_twig: { import: './src/scripts/blocks/twig.js', filename: './Blocks/twig/block.js' },
+            block_template_parts: { import: './src/scripts/blocks/template-parts.js', filename: './Blocks/TemplateParts/block.js' },
+        },
         output: {
-            filename: argv.mode === 'production' ? '[name].min.js' : '[name].js',
-            path: path.resolve(__dirname, 'dist/scripts'),
+            path: path.resolve(__dirname),
         },
         devtool : 'eval-cheap-source-map',
         watchOptions: {
             ignored: '**/node_modules/',
-        },
-        externals: {
-            'jquery': 'jQuery'
         },
         module: {
             rules: [
@@ -45,6 +31,6 @@ module.exports = (env, argv) => {
                 }
             ]
         },
-        plugins: [ new DependencyExtractionWebpackPlugin({injectPolyfill : true}) ],
+        plugins: [ new DependencyExtractionWebpackPlugin({injectPolyfill : true, combineAssets : false}) ],
     }
 };

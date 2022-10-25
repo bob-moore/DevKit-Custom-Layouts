@@ -75,3 +75,29 @@
 		}
 	}
 }
+a.devkit-layout-edit.divi {
+	color: #fff;
+	padding: 1em;
+	border: 3px solid #ffa502;
+	line-height: 1;
+	margin: 0;
+	padding: 0;
+	clear: both;
+	color: #ffa502;
+	padding: 0.5em 1em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	.placeholder {
+		flex: 1;
+		padding-left: 1em;
+	}
+	svg {
+		fill: #ffa502;
+		min-width: 20px;
+		min-height: 20px;
+		width: 20px;
+		height: 20px;
+		margin: auto;
+	}
+}

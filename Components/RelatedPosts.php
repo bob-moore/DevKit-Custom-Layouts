@@ -11,6 +11,7 @@ namespace DevKit\Layouts\Components;
 
 use DevKit\Layouts\Base;
 use DevKit\Layouts\Subscriber;
+use DevKit\Layouts\Plugin;
 
 class RelatedPosts extends Base
 {
@@ -118,7 +119,7 @@ class RelatedPosts extends Base
 		/**
 		 * Bail if contextual related posts not active
 		 */
-		if ( ! $this->isPluginActive('contextual-related-posts/contextual-related-posts.php') || ! function_exists('get_crp_posts_id' ) )
+		if ( ! Plugin::isPluginActive('contextual-related-posts/contextual-related-posts.php') || ! function_exists('get_crp_posts_id' ) )
 		{
 			return $ids;
 		}
@@ -153,14 +154,14 @@ class RelatedPosts extends Base
 		/**
 		 * Bail if already been filled by another plugin/theme/user
 		 */
-		// if ( ! empty( $ids ) )
-		// {
-		// 	return $ids;
-		// }
+		 if ( ! empty( $ids ) )
+		 {
+		 	return $ids;
+		 }
 		/**
 		 * Bail if plugin not active
 		 */
-		if ( ! $this->isPluginActive( 'jetpack/jetpack.php' ) || ! class_exists( 'Jetpack_RelatedPosts' ) )
+		if ( ! Plugin::isPluginActive( 'jetpack/jetpack.php' ) || ! class_exists( 'Jetpack_RelatedPosts' ) )
 		{
 			return $ids;
 		}

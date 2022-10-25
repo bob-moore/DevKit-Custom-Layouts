@@ -26,7 +26,8 @@ class FLBuilder extends Base
 	 */
 	public function __construct()
 	{
-		if (!Plugin::isPluginActive('beaver-builder-lite-version/fl-builder.php') && !Plugin::isPluginActive('bb-plugin/fl-builder.php')) {
+		if ( ! Plugin::isPluginActive('beaver-builder-lite-version/fl-builder.php') && ! Plugin::isPluginActive('bb-plugin/fl-builder.php') )
+		{
 			return false;
 		}
 		return parent::__construct();
@@ -57,9 +58,9 @@ class FLBuilder extends Base
 	{
 		global $wp_post_types;
 
-		if (isset($wp_post_types[Layout::LAYOUT_POST_TYPE_NAME]))
+		if (isset($wp_post_types[DEVKIT_TEMPLATES_POST_TYPE]))
 		{
-			$post_types[Layout::LAYOUT_POST_TYPE_NAME] = $wp_post_types[Layout::LAYOUT_POST_TYPE_NAME];
+			$post_types[DEVKIT_TEMPLATES_POST_TYPE] = $wp_post_types[DEVKIT_TEMPLATES_POST_TYPE];
 		}
 		return $post_types;
 	}
@@ -117,7 +118,7 @@ class FLBuilder extends Base
 		else
 		{
 			\FLBuilder::render_query([
-				'post_type' => Layout::LAYOUT_POST_TYPE_NAME,
+				'post_type' => DEVKIT_TEMPLATES_POST_TYPE,
 				'p' => $layout->id,
 			]);
 		}

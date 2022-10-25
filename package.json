@@ -37,13 +37,21 @@
     "last 3 version"
   ],
   "dependencies": {
+    "@wordpress/api-fetch": "^6.15.0",
+    "@wordpress/blocks": "^11.17.0",
+    "@wordpress/data": "^7.3.0",
     "@wordpress/dom-ready": "^3.8.0",
     "@wordpress/element": "^4.15.0",
     "@wordpress/i18n": "^4.17.0",
+    "@wordpress/scripts": "^24.2.0",
     "ace-builds": "^1.10.0",
     "emmet-core": "^1.0.0",
+    "jquery": "^3.6.1",
+    "jQuery": "^1.7.4",
     "react-ace": "^10.1.0",
     "react-copy-to-clipboard": "^5.1.0",
+    "react-modal": "^3.16.1",
+    "react-modal-resizable-draggable": "^0.1.6",
     "react-select": "^5.4.0"
   }
 }

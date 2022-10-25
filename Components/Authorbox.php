@@ -36,7 +36,7 @@ class Authorbox extends Base
 		return array_merge(
 			$templates,
 			[
-				'author-box' => 'Author Box',
+				'author-box' => __('Author Box', 'devkit_layouts'),
 			]
 		);
 	}

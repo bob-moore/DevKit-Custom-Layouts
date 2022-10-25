@@ -1,10 +1,7 @@
-
-import ReactDOM from 'react-dom/client';
-import domReady from '@wordpress/dom-ready';
-import { __, sprintf } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
+import { Component} from "@wordpress/element";
 
 import AceEditor from "react-ace";
-
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-scss";
 import "ace-builds/src-noconflict/theme-textmate";
@@ -16,45 +13,41 @@ import "ace-builds/src-noconflict/snippets/javascript";
 import "ace-builds/src-noconflict/ext-emmet";
 import 'emmet-core';
 
-
-import fieldKey from '../includes/field-key';
-
-class OptionsMetabox extends React.Component
+class ScriptsMetabox extends Component
 {
     constructor(props)
     {
         super(props);
 
-		this.fields = {
-			scripts : devkit_metabox_data.fields.scripts,
-			styles : devkit_metabox_data.fields.styles
-		};
-
         this.state = {
-			scripts : devkit_metabox_data.meta.scripts,
-			styles : devkit_metabox_data.meta.styles
+			scripts : this.props.meta.scripts.raw,
+			styles : this.props.meta.styles.raw
         };
     }
-	_updateScripts = ( value ) =>
-	{
-		this.setState( { scripts : value } );
+    _getValue = ( needle, haystack ) =>
+    {
+        return this.props.fields[haystack].values[needle] || this.props.fields[haystack].default;
     }
-	_updateStyles = ( value ) =>
-	{
-		this.setState( { styles : value } );
+    _update = ( value, property ) =>
+    {
+        this.setState( { [property] : value } );
     }
     render() {
         return (
             <fieldset>
 				<div className='field-group'>
                     <div className="field">
-						<label htmlFor={fieldKey('scripts')}>{__( 'Javascript', 'devkit_layouts' )}</label>
+						<label
+                            htmlFor={sprintf('%s[scripts][raw]', this.props.key)}>
+                            {__( 'Javascript', 'devkit_layouts' )}
+                        </label>
                         <AceEditor
                             mode="javascript"
                             theme="textmate"
-                            onChange={this._updateScripts}
+                            onChange={ (value) => this._update( value, 'scripts' )}
                             width="100%"
-                            height="300px"
+                            minLines={10}
+                            maxLines={30}
                             value={this.state.scripts}
                             fontSize={16}
                             showPrintMargin={true}
@@ -70,22 +63,28 @@ class OptionsMetabox extends React.Component
                             }}
                         />
                         <textarea
-                            name={fieldKey('scripts')}
+                            name={sprintf('%s[scripts][raw]', this.props.key)}
                             readOnly={true}
                             value={this.state.scripts}
-							className='screen-reader-text'
+                            style={{display : 'none'}}
                         />
                     </div>
                 </div>
 				<div className='field-group'>
                     <div className="field">
-						<label htmlFor={fieldKey('styles')}>{__( 'CSS', 'devkit_layouts' )}</label>
+
+						<label
+                            htmlFor={sprintf('%s[styles][raw]', this.props.key)}>
+                            {__( 'CSS', 'devkit_layouts' )}
+                        </label>
+
                         <AceEditor
                             mode="scss"
                             theme="textmate"
-                            onChange={this._updateStyles}
+                            onChange={ (value) => this._update( value, 'styles' )}
                             width="100%"
-                            height="300px"
+                            minLines={10}
+                            maxLines={30}
                             value={this.state.styles}
                             fontSize={16}
                             showPrintMargin={true}
@@ -101,40 +100,18 @@ class OptionsMetabox extends React.Component
                             }}
                         />
                         <textarea
-                            name={fieldKey('styles')}
+                            name={sprintf('%s[styles][raw]', this.props.key)}
                             readOnly={true}
                             value={this.state.styles}
-							className='screen-reader-text'
+							style={{display : 'none'}}
                         />
+                        <div className="informational">
+                            <p><span className="dashicons dashicons-editor-help"></span> Supports SCSS</p>
+                        </div>
                     </div>
                 </div>
             </fieldset>
 	    )
     }
 }
-
-domReady( function () {
-
-	let metabox_container = document.getElementById('devkit-layouts-metabox-scripts');
-
-	if ( metabox_container )
-	{
-		const root = ReactDOM.createRoot( metabox_container );
-		root.render(
-            <OptionsMetabox
-                fields={
-                    {
-                        scripts : devkit_metabox_data.fields.scripts,
-                        styles : devkit_metabox_data.fields.styles
-                    }
-                }
-				meta={
-					{
-						scripts : devkit_metabox_data.meta.scripts,
-                        styles : devkit_metabox_data.meta.styles
-					}
-				}
-            />
-        );
-	}
-} );
+export default ScriptsMetabox;

@@ -8,24 +8,21 @@
 
 namespace DevKit\Layouts;
 
+use \Timber\LocationManager;
+use \Timber\PostQuery;
+
 defined( 'ABSPATH' ) || exit;
 
 class Timber extends Base
 {
-	/**
-	 * Scope (context)
-	 *
-	 * @var array
-	 * @access protected
-	 */
-	protected array $_scope = [];
 	/**
 	 * Timber instance
 	 *
 	 * @var \Timber\Timber
 	 * @access protected
 	 */
-	protected $timber;
+	protected object $_timber;
+
 	/**
 	 * Locations to look for template files
 	 *
@@ -34,17 +31,15 @@ class Timber extends Base
 	 */
 	protected array $_locations = [];
 	/**
-	 * Constructor
-	 *
-	 * Instantiate timber
+	 * Instantiate & return timber object timber
 	 */
-	public function __construct()
+	protected function timber() : \Timber\Timber
 	{
-		parent::__construct();
-
-        $this->timber = new \Timber\Timber();
-
-		return $this;
+		if ( ! isset( $this->_timber ) )
+		{
+			$this->_timber  = new \Timber\Timber();
+		}
+		return $this->_timber;
 	}
 	/**
 	 * Register filters
@@ -67,41 +62,32 @@ class Timber extends Base
 	{
         if (empty($this->_locations))
         {
-            $this->_locations =  wp_parse_args(
-                [
-                    DEVKIT_TEMPLATES_PATH . 'template-parts/'
-                ],
-                $locations
-            );
+			$theme_dir = apply_filters( 'devkit/layouts/template-path', trailingslashit( get_stylesheet_directory() ) . 'template-parts/' );
+			$add_locations = is_dir( $theme_dir ) ? [ $theme_dir, DEVKIT_TEMPLATES_PATH . 'template-parts/' ] : [DEVKIT_TEMPLATES_PATH . 'template-parts/'];
+			$this->_locations =  wp_parse_args( $add_locations, $locations );
         }
-
-		return wp_parse_args($this->_locations, $locations);
+		return $this->_locations;
 	}
 	/**
 	 * Get the scope, either from cache or from Timber directly
 	 */
 	public function scope() : array
 	{
-		return apply_filters( 'devkit/layouts/scope', $this->timber::context() );
+		return apply_filters( 'devkit/layouts/scope', $this->timber()::context() );
 	}
 	/**
 	 * Render a frontend template
 	 *
-	 * @param  array  $template name of template to render
+	 * @param  string  $template name of template to render
 	 * @param  array  $data     data to merge with $_scope
 	 */
 	public function render( string $template, array $data = [] ) : void
 	{
-
 		$templates = apply_filters( "devkit/layouts/templates/{$template}", [ $template ] );
-
-		$found = '';
-
-		$include = false;
 
         if ( empty($this->_locations ) )
         {
-            \Timber\LocationManager::get_locations();
+            LocationManager::get_locations();
         }
 
 		foreach ( $this->_locations as $location )
@@ -154,7 +140,7 @@ class Timber extends Base
 		 */
 		if ( in_array( pathinfo( $found, PATHINFO_EXTENSION ), [ 'twig', 'html' ] ) )
 		{
-			$this->timber::render( $found, $scope );
+			$this->timber()::render( $found, $scope );
 		}
 		/**
 		 * Maybe include PHP
@@ -179,16 +165,16 @@ class Timber extends Base
 			$_scope = wp_parse_args( $data, $_scope );
 		}
 
-		$this->timber::render_string( $string, $_scope );
+		$this->timber()::render_string( $string, $_scope );
 	}
 
 	public function getPosts( $args = [] )
 	{
-		return new \Timber\PostQuery( $args );
+		return new PostQuery( $args );
 	}
 
 	public function getPost( int $id = 0 )
 	{
-		return $this->timber::get_post( $id );
+		return $this->timber()::get_post( $id );
 	}
 }

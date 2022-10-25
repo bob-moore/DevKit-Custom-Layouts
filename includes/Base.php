@@ -10,11 +10,9 @@
 
 namespace DevKit\Layouts;
 
-
-
 defined( 'ABSPATH' ) || exit;
 
-class Base
+abstract class Base
 {
 	/**
 	 * Construct new instance

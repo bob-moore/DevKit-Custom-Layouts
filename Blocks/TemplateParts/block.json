@@ -1,0 +1,8 @@
+{
+  "apiVersion": 2,
+  "title": "Template Part",
+  "name": "devkit-layouts/template-parts",
+  "category": "layout",
+  "icon": "block-default",
+  "editorScript": "file:/block.js"
+}

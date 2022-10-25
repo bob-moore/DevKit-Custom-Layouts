@@ -9,8 +9,7 @@
  */
 namespace DevKit\Layouts;
 
-// use \DevKit\Layouts\PostTypes\Layout;
-use \DevKit\Layouts\Controllers\Conditions;
+use \DevKit\Layouts\Classes;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -86,14 +85,27 @@ class FrontEnd extends Base
 	}
 	public function enqueueAssets() : void
 	{
-		wp_enqueue_script('devkit-layouts-frontend', DEVKIT_TEMPLATES_URL . '/assets/js/frontend' . DEVKIT_TEMPLATES_ASSET_PREFIX . '.js', [], DEVKIT_TEMPLATES_VERSION, true);
+		$assets = include DEVKIT_TEMPLATES_PATH . '/dist/scripts/frontend.asset.php';
+
+		wp_enqueue_script(
+			'devkit-layouts-frontend',
+			DEVKIT_TEMPLATES_URL . '/dist/scripts/frontend.js',
+			$assets['dependencies'],
+			$assets['version'],
+			true
+		);
 
 		if ( ! empty( $this->_js ) )
 		{
 			wp_add_inline_script('devkit-layouts-frontend', $this->_js );
 		}
 
-		wp_enqueue_style('devkit-layouts-frontend', DEVKIT_TEMPLATES_URL . '/assets/css/frontend' . DEVKIT_TEMPLATES_ASSET_PREFIX . '.css', [], DEVKIT_TEMPLATES_VERSION, 'all');
+		wp_enqueue_style(
+			'devkit-layouts-frontend',
+			DEVKIT_TEMPLATES_URL . '/dist/styles/frontend.css',
+			[],
+			DEVKIT_TEMPLATES_VERSION,
+			'all');
 
 		if ( ! empty($this->_css ) )
 		{
@@ -103,7 +115,7 @@ class FrontEnd extends Base
 
 	public function queueCssJs()
 	{
-		$queue = Subscriber::getInstance('Controllers\Locations')->getQueued();
+		$queue = Subscriber::getInstance('Locations')->getQueued();
 
 		if ( ! $queue )
 		{
@@ -172,7 +184,7 @@ class FrontEnd extends Base
 
 		$current_action = current_action();
 
-		$layout = Subscriber::getInstance( 'Controllers\Locations' )->getQueued( $current_action, $caller[1] );
+		$layout = Subscriber::getInstance( 'Locations' )->getQueued( $current_action, $caller[1] );
 
 		if ($current_action === 'the_content')
 		{
@@ -221,7 +233,7 @@ class FrontEnd extends Base
 				break;
 			default:
 				/**
-				 * Allow other builders (beaver builder, elementor, etc) to short circuit with
+				 * Allow other builders (beaver builder, elementor, etc.) to short circuit with
 				 * their own content
 				 */
 				$content = apply_filters('devkit/layouts/content', '', $layout);

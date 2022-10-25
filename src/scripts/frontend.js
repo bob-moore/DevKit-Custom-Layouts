@@ -1,3 +1,5 @@
+import 'jquery';
+
 jQuery( function( $ ) {
 	'use strict';
 	$('a.devkit-layout-edit').on( 'click', ( event ) => {

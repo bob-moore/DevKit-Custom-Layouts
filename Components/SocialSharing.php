@@ -50,7 +50,6 @@ class SocialSharing extends Base
 		}
 		return $scope;
 	}
-
 	public function buttons() : string
 	{
 		ob_start();
